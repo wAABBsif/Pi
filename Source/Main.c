@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -27,7 +28,7 @@ int main(const int argc, char **argv)
         }
     }
 
-    printf("Calculating pi at a resolution of %llu...\n", resolution);
+    printf("\nCalculating pi at a resolution of %llu...\n", resolution);
     lDouble pi = 0.0L;
     Vector2 pos = {-1.0L, 0.0L};
     Vector2 nPos = pos;
@@ -52,6 +53,7 @@ int main(const int argc, char **argv)
         pos = nPos;
     }
 
-    printf("Pi was calculated to be approximately...\n%.15Lf\n", pi);
+    printf("Pi was calculated to be approximately: %.15Lf\n", pi);
+    sleep(1);
     return EXIT_SUCCESS;
 }
