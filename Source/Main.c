@@ -3,9 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef long double lDouble;
+
 typedef struct Vector2
 {
-    double x, y;
+    lDouble x, y;
 } Vector2;
 
 int main(const int argc, char **argv)
@@ -18,30 +20,30 @@ int main(const int argc, char **argv)
     else
     {
         printf("Enter the resolution you want to calculate at: ");
-        if (scanf("%lu", &resolution) != 1)
+        if (scanf("%llu", &resolution) != 1)
         {
             printf("Error reading resolution\n");
             return EXIT_FAILURE;
         }
     }
 
-    printf("Calculating pi at a resolution of %lu...\n", resolution);
-    double pi = 0;
-    Vector2 pos = {-1, 0};
+    printf("Calculating pi at a resolution of %llu...\n", resolution);
+    lDouble pi = 0.0L;
+    Vector2 pos = {-1.0L, 0.0L};
     Vector2 nPos = pos;
 
-    for (uint64_t i = 0; i < resolution; i++)
+    for (uint64_t i = 0; i <= resolution; i++)
     {
-        nPos.x += 2.0 / resolution;
-        nPos.y = sqrt(1 - nPos.x * nPos.x);
-        if (fabs(nPos.x) >= 1)
+        nPos.x += 2.0L / resolution;
+        nPos.y = sqrtl(1.0L - nPos.x * nPos.x);
+        if (fabsl(nPos.x) >= 1.0L)
         {
-            nPos.x = 1;
-            nPos.y = 0;
+            nPos.x = 1.0L;
+            nPos.y = 0.0L;
         }
 
         const Vector2 diff = {pos.x - nPos.x, pos.y - nPos.y};
-        const double distance = sqrt(diff.x * diff.x + diff.y * diff.y);
+        const lDouble distance = sqrtl(diff.x * diff.x + diff.y * diff.y);
         #ifdef IS_DEBUG
         printf("[%f, %f], Adding %f - total: %f\n", nPos.x, nPos.y, distance, pi);
         #endif
@@ -50,6 +52,6 @@ int main(const int argc, char **argv)
         pos = nPos;
     }
 
-    printf("Pi was calculated to be approximately...\n%.13f\n", pi);
+    printf("Pi was calculated to be approximately...\n%.15Lf\n", pi);
     return EXIT_SUCCESS;
 }
